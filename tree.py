@@ -106,7 +106,7 @@ A Node in a tree is either an operator with branches or a variable leaf.
             else:   #Create a leaf otherwise
                 self.variable = self.Variable(variables)
     
-    def __lt__(self, other):
+    def __lt__(self, other): #defines sorting behavior of trees
         return self.fitness < other.fitness
             
     def __repr__(self):
@@ -147,28 +147,28 @@ A Node in a tree is either an operator with branches or a variable leaf.
             root = self
         return root
 
-    def print_tree(self, depth = 0):
+    def print_tree(self, depth = 0, file = sys.stdout):
         """Prints the right side of tree first rotated so that upper nodes.
             are left and lower nodes are indented
         """
         indent = 4 * depth
         try:
-            self.right.print_tree(depth + 1)
+            self.right.print_tree(depth + 1, file = file)
         except AttributeError:
             pass
-        print(' ' * indent, self)
+        print(' ' * indent, self, file=file)
         try:
-            self.left.print_tree(depth + 1)
+            self.left.print_tree(depth + 1, file = file)
         except AttributeError:
             pass
         
-    def print_tree_data(self):
+    def print_tree_data(self, file = sys.stdout):
         """In addition to print_tree, also prints fitness and height.
         """
-        self.print_tree()
+        self.print_tree(file = file)
         print("""
               Fitness:{0}
-              Height: {1}""".format(self.fitness, self.get_tree_height()))
+              Height: {1}""".format(self.fitness, self.get_tree_height()), file=file)
 
      
     def apply_tree(self, full_df, curr_df, is_not = False):
@@ -257,11 +257,20 @@ A Node in a tree is either an operator with branches or a variable leaf.
         chooses how many steps to traverse tree. Calls find_node() to return
         the node, which remembers its own position in relation to its parent
         """
+
         want_leaf = random.randint(1, 100) < (100*leaf_probability) #true or false value, determined via probability
-        print('want leaf', want_leaf)
+        #print('want leaf', want_leaf)
         num_steps = random.randint(1, self.get_tree_size()) #choosing a random node means traversing a random number of steps
-        print('number of steps', num_steps)
+        #print('number of steps', num_steps)
         node, steps_taken = self.find_node(want_leaf = want_leaf, num_steps = num_steps)
+        if self.get_tree_size() < 2: # If tree is only a leaf, return that leaf
+            return self        
+        if not node:
+            self.print_tree()
+            print('want leaf', want_leaf)
+            print(self.get_tree_size())
+            print('number of steps', num_steps)
+            raise Exception('find_node did not return a node')
         return node
     
     def copy_tree(self, destination_node, variables, destination_parent=None):
@@ -308,7 +317,10 @@ A Node in a tree is either an operator with branches or a variable leaf.
             elif want_leaf: #want leaf but node is operator
                 pass #keep going (will hit a leaf)
             else: #want operator but node is leaf
+#                if not parent:
+#                    raise Exception('find_node failed to return a parent')
                 return(parent, curr_step) #parent of leaf will always be an operator 
+        
         if self.right:
             node, curr_step = self.right.find_node(want_leaf, num_steps, self, curr_step)
             if node: #found correct node if node is returned

@@ -1,0 +1,74 @@
+                 Max_temp: min:22.112239183222343 max:23.328901698524028 ran:1.2166625153016848
+             OR NOT
+                 Census_HomeDensity_AOI: min:238.12345095704524 max:263.31447409673444 ran:25.191023139689186
+         OR NOT
+                     Max_temp: min:10.112239183222345 max:11.32890169852403 ran:1.2166625153016848
+                 OR
+                                 Metabolic_Rate_(kj/d): min:9661.285151616139 max:9756.238780038193 ran:94.95362842205475
+                             OR NOT
+                                 Metabolic_Rate_(kj/d): min:9661.285151616139 max:9756.238780038193 ran:94.95362842205475
+                         OR NOT
+                                     Census_HomeDensity_AOI: min:248.12345095704524 max:273.31447409673444 ran:25.191023139689186
+                                 OR
+                                     Census_HomeDensity_AOI: min:248.12345095704524 max:273.31447409673444 ran:25.191023139689186
+                             OR NOT
+                                         Metabolic_Rate_(kj/d): min:10.727308505133392 max:10.76099472041168 ran:0.03368621527828843
+                                     AND
+                                         Metabolic_Rate_(kj/d): min:9669.721255049812 max:10084.9503759373 ran:415.2291208874882
+                                 OR NOT
+                                     Metabolic_Rate_(kj/d): min:9674.285151616139 max:9754.238780038193 ran:79.95362842205475
+                     AND
+                                 Metabolic_Rate_(kj/d): min:9664.285151616139 max:9755.238780038193 ran:90.95362842205475
+                             OR
+                                     Max_temp: min:15009.655049202784 max:20146.803045143537 ran:5137.147995940754
+                                 OR NOT
+                                         Min_temp: min:10.727308505133392 max:10.76099472041168 ran:0.03368621527828843
+                                     OR
+                                         Max_temp: min:10.112239183222345 max:11.32890169852403 ran:1.2166625153016848
+                         OR NOT
+                             Metabolic_Rate_(kj/d): min:9673.285151616139 max:9748.238780038193 ran:74.95362842205475
+             OR NOT
+                 Metabolic_Rate_(kj/d): min:9674.285151616139 max:9754.238780038193 ran:79.95362842205475
+     OR NOT
+                 Max_temp: min:22.112239183222343 max:23.328901698524028 ran:1.2166625153016848
+             OR NOT
+                 Census_HomeDensity_AOI: min:238.12345095704524 max:263.31447409673444 ran:25.191023139689186
+         OR NOT
+                     Max_temp: min:10.112239183222345 max:11.32890169852403 ran:1.2166625153016848
+                 OR
+                                     Census_HomeDensity_AOI: min:248.12345095704524 max:273.31447409673444 ran:25.191023139689186
+                                 OR
+                                     Census_HomeDensity_AOI: min:248.12345095704524 max:273.31447409673444 ran:25.191023139689186
+                             OR NOT
+                                         Metabolic_Rate_(kj/d): min:10.727308505133392 max:10.76099472041168 ran:0.03368621527828843
+                                     AND
+                                         Metabolic_Rate_(kj/d): min:9669.721255049812 max:10084.9503759373 ran:415.2291208874882
+                                 OR NOT
+                                     Metabolic_Rate_(kj/d): min:9674.285151616139 max:9754.238780038193 ran:79.95362842205475
+                         OR NOT
+                                     Census_HomeDensity_AOI: min:248.12345095704524 max:273.31447409673444 ran:25.191023139689186
+                                 OR
+                                     Census_HomeDensity_AOI: min:248.12345095704524 max:273.31447409673444 ran:25.191023139689186
+                             OR NOT
+                                         Metabolic_Rate_(kj/d): min:10.727308505133392 max:10.76099472041168 ran:0.03368621527828843
+                                     AND
+                                         Metabolic_Rate_(kj/d): min:9669.721255049812 max:10084.9503759373 ran:415.2291208874882
+                                 OR NOT
+                                     Metabolic_Rate_(kj/d): min:9674.285151616139 max:9754.238780038193 ran:79.95362842205475
+                     AND
+                                 Metabolic_Rate_(kj/d): min:9664.285151616139 max:9755.238780038193 ran:90.95362842205475
+                             OR
+                                     Max_temp: min:15009.655049202784 max:20146.803045143537 ran:5137.147995940754
+                                 OR NOT
+                                         Min_temp: min:10.727308505133392 max:10.76099472041168 ran:0.03368621527828843
+                                     OR
+                                         Max_temp: min:10.112239183222345 max:11.32890169852403 ran:1.2166625153016848
+                         OR NOT
+                             Metabolic_Rate_(kj/d): min:9673.285151616139 max:9748.238780038193 ran:74.95362842205475
+             OR NOT
+                 Metabolic_Rate_(kj/d): min:9674.285151616139 max:9754.238780038193 ran:79.95362842205475
+ OR
+     Metabolic_Rate_(kj/d): min:9673.285151616139 max:9748.238780038193 ran:74.95362842205475
+
+              Fitness:0.8396860986547086
+              Height: 11
