@@ -345,9 +345,11 @@ def create_tree(variables, max_height, data, presence, absence):
     n.init_tree(variables, max_height)
     n.eval_fitness(data, presence, absence)
     if n:
-        print("tree created")
+        # print("tree created")
+        pass
     else:
         print("tree failed")
+        raise Exception('Tree creation failed')
     return n
  
 def is_correct_type(want_leaf, node):

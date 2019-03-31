@@ -2,15 +2,21 @@
 """
 Created on Thu Jan  3 20:56:06 2019
 
+To run this file, provide 2 arguments after the script name: First, 
+the path to the data file being used. Second, the path to a 
+directory into which the program will create the output files. 
+E.g. python3 GP_Main.py <path to data>.csv <path to output directory>
+
 @author: Savannah Rogers
 """
 
+import sys
 import pandas 
 from tree import rand_list_item, Node, rand_dict_key, create_tree
 import random
 import numpy as np
 
-RAW_DATA = pandas.read_csv("C:/Users/Savannah Rogers/Documents/MSGrizzlyProject/GeneticProgram_SpeciesPresence/input_data/nlw.csv")
+RAW_DATA = None
 #RAW_DATA = pandas.read_csv("C:/Users/Savannah Rogers/Documents/SpatDistModelingfa18/full_grizz_dataset.csv", usecols = [ "bio1","bio2","bio3","bio4","bio5", "bio6","bio7","bio8","bio9","bio10","bio11","bio12","bio13","bio14","bio15","bio16","bio17","bio18","bio19","Census_HomeDensity_AOI","Dist2ForestEdge_m","Dist2Road_Hwy_m","Dist2Stream_Rivers_m","Elevation_meters","Forest","NDVI","NLCD2011","presence","lati","long","AID","ID2","SEX","Cohort","AGEnum","birth.year","TelemDate","Location_Status","FixStatus","PDOP","HDOP","VDOP","TDOP","TransInf"], dtype = {'lati': np.float64, 'long': np.float64,'AID': 'category', 'AGEnum': np.float64, 'VDOP':np.float64, 'FixStatus':'category'})
 #RAW_DATA = pandas.read_csv(".\dummydata.csv")    
 #RAW_DATA["mean_temp"] = RAW_DATA["bio1"]
@@ -19,15 +25,10 @@ RAW_DATA = pandas.read_csv("C:/Users/Savannah Rogers/Documents/MSGrizzlyProject/
 #VARS = RAW_DATA.iloc[:,[19,20,21,22,23,24,25,26,44,45,46]]
 #Decide which variables to use
 #VARS = RAW_DATA.iloc[:,[1,5,12,19,20,21,22,23,24,25,26]]
-VARS = RAW_DATA.iloc[:,[38,39,40,41,42,43,45,46,47,48,49,50]]
+# VARS = RAW_DATA.iloc[:,[38,39,40,41,42,43,45,46,47,48,49,50]]
+VARS = None
 enviro_vars = {}
 
-for i in list(VARS):
-#for i in list(RAW_DATA)[0:5]:
-    title = i
-    mini = min(RAW_DATA[i])
-    maxi = max(RAW_DATA[i])
-    enviro_vars[title] = {'min': mini, 'max':maxi}
     
 #print(enviro_vars)
 
@@ -108,9 +109,14 @@ def same_fit_smaller_size(subset, proximity):
         size = len(topfits)
         return chosen, size
 
+def static_vars(**kwargs):
+    def decorate(func):
+        for k in kwargs:
+            setattr(func, k, kwargs[k])
+        return func
+    return decorate
 
-
-
+@static_vars(converged_pop_counter=0)
 def population_reproduction(population, pop_size, tournament_size, mut_prob, leaf_mut_prob, leaf_probability, full_df, total_pres, total_abs, variables):
     """
     Tournament style reproduction. Selects tournament subset, chooses two most fit parents,
@@ -133,6 +139,7 @@ def population_reproduction(population, pop_size, tournament_size, mut_prob, lea
         winner2, choices2 = same_fit_smaller_size(population[choices:], .000002)
     else:
         print("identical fitness for entire population")
+        population_reproduction.converged_pop_counter += 1
         winner2 = winner
     winner.copy_tree(survivor1, variables)
     winner2.copy_tree(survivor2, variables)
@@ -566,7 +573,7 @@ def mult_gen():
 
     data_pres = raw_data[raw_data.presence == 1].count()[0]
     data_abse = raw_data[raw_data.presence == 0].count()[0]
-    pop_size = 200
+    pop_size = 1000
     variables = enviro_vars
     max_height = 5
     tournament_size = 3
@@ -587,6 +594,8 @@ def mult_gen():
     best_fits.append(best_fit)
     
     for i in range(1,generations):
+        if population_reproduction.converged_pop_counter > 5:
+            break
         #print("Popultaion {} fitnesses of individuals".format(i+1))
         pop, avg_pop_fit, sd_pop_fit, best_ind, best_fit = population_reproduction(pop, pop_size, tournament_size, mut_prob, leaf_mut_prob, leaf_probability, raw_data, data_pres, data_abse, enviro_vars)
         #print("Average fitness of population {}: {}".format(i+1, fit))
@@ -611,17 +620,25 @@ def mult_gen():
             {}
           """.format(pop_size, tournament_size, leaf_probability, mut_prob, leaf_mut_prob, generation, avg_fitnesses))
     df = pandas.DataFrame()
-    df['Gen'] = generations
+    # df['Gen'] = generations  # Not working
     df['Avg Fitness'] = avg_fitnesses
     df['SD Fitness'] = sd_fitnesses
     df['Best Fitness'] = best_fits
     for i in range(0,len(best_inds)):
-        with open("output_trees/best_tree_gen_%s.txt" %i, 'w') as f:
+        with open("{}/best_tree_gen_{}.txt".format(sys.argv[2], i), 'w') as f:
             best_inds[i].print_tree_data(file = f)
-    df.to_csv("output_trees/data.csv", sep = ',')
+    df.to_csv("{}/data.csv".format(sys.argv[2]), sep = ',')
 
 
 if __name__ == "__main__":
+    RAW_DATA = pandas.read_csv(sys.argv[1])
+    VARS = RAW_DATA.iloc[:,[38,39,40,41,42,43,45,46,47,48,49,50]]
+    for i in list(VARS):
+    #for i in list(RAW_DATA)[0:5]:
+        title = i
+        mini = min(RAW_DATA[i])
+        maxi = max(RAW_DATA[i])
+        enviro_vars[title] = {'min': mini, 'max':maxi}
     #test_pop_creation()
     #test_getting_node_for_crossover()
     #test_crossover()
