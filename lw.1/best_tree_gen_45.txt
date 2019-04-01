@@ -1,0 +1,8 @@
+         Metabolic_Rate_(kj/d): min:13606.792290816755 max:13848.25184105089 ran:241.4595502341348
+     AND
+         Dist2Stream_Rivers_m: min:2126.05753491081 max:2910.43037580461 ran:784.3728408937999
+ OR
+     Elevation_meters: min:2248.8249959073746 max:2611.14432690593 ran:362.31933099855536
+
+              Fitness:0.7903943377148634
+              Height: 3
