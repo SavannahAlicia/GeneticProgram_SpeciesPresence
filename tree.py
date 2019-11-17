@@ -111,7 +111,13 @@ A Node in a tree is either an operator with branches or a variable leaf.
             
     def __repr__(self):
         if self.operator:
-            return self.operator
+            # Because 'NOT's are not passed down through operators, 
+            # they essentially don't exist unless their right-hand
+            # children are variables
+            if self.right.variable:
+                return self.operator
+            else:
+                return self.operator.replace('NOT', '')
         elif self.variable:
             return '{}'.format(self.variable)
         else:
@@ -171,10 +177,10 @@ A Node in a tree is either an operator with branches or a variable leaf.
               Height: {1}""".format(self.fitness, self.get_tree_height()), file=file)
 
      
-    def apply_tree(self, full_df, curr_df, is_not = False):
+    def apply_tree(self, curr_df, is_not = False):
         ''' Returns a subset of user dataframe that obeys the node ruleset
             
-            Attributes: full_df, curr_df
+            Attributes: curr_df
             
             Checks node type.
                 For AND operator, subsets df based on left node and passes that
@@ -187,31 +193,31 @@ A Node in a tree is either an operator with branches or a variable leaf.
                 are between node values
         '''
         if self.operator == 'AND':
-            left_df = self.left.apply_tree(full_df, curr_df)
+            left_df = self.left.apply_tree(curr_df)
             if left_df.empty:
                 return left_df                             #if the left side is empty, "AND" inclusive will be empty
-            curr_df = self.right.apply_tree(full_df, left_df) #take subset that follows rules on left and find parts of it that also obey rules on right
+            curr_df = self.right.apply_tree(left_df) #take subset that follows rules on left and find parts of it that also obey rules on right
             return curr_df
         elif self.operator == 'OR':
-            left_df = self.left.apply_tree(full_df, curr_df) #"curr_df" will be passed in as "full_df.copy"
-            right_df = self.right.apply_tree(full_df, full_df.copy())
+            left_df = self.left.apply_tree(curr_df.copy()) #"curr_df" will be passed in as "opy"
+            right_df = self.right.apply_tree(curr_df.copy())
             curr_df = pandas.concat([left_df, right_df]).drop_duplicates().reset_index(drop=True)
             return curr_df
         elif self.operator == 'AND NOT':
-            left_df = self.left.apply_tree(full_df, curr_df)
+            left_df = self.left.apply_tree(curr_df)
             if left_df.empty:
                 return left_df
-            curr_df = self.right.apply_tree(full_df, left_df, True)
+            curr_df = self.right.apply_tree(left_df, True)
             return curr_df
         elif self.operator == 'OR NOT':
-            left_df = self.left.apply_tree(full_df, curr_df)
-            right_df = self.right.apply_tree(full_df, full_df.copy(), True)
+            left_df = self.left.apply_tree(curr_df.copy())
+            right_df = self.right.apply_tree(curr_df.copy(), True)
             curr_df = pandas.concat([left_df, right_df]).drop_duplicates().reset_index(drop=True)
             return curr_df
         elif self.variable:
             if not curr_df.empty: #if curr_df is empty, just return empty
                 if is_not:
-                    curr_df = curr_df[~(curr_df[self.variable.name] > self.variable.min) & ~(curr_df[self.variable.name] < (self.variable.min + self.variable.range))]
+                    curr_df = curr_df[~(curr_df[self.variable.name] > self.variable.min) | ~(curr_df[self.variable.name] < (self.variable.min + self.variable.range))]
                 
                 else:
                     curr_df = curr_df[(curr_df[self.variable.name] > self.variable.min) & (curr_df[self.variable.name] < (self.variable.min + self.variable.range))]
@@ -229,14 +235,14 @@ A Node in a tree is either an operator with branches or a variable leaf.
                 total_pres():
                 total_abs():
         
-            Calls apply_tree on full_df and full_df.copy().
+            Calls apply_tree on full_df.
             Calculates accuracy as true positives + true negatives/total
             Weights empty dataframe fitness as -1 since accuracy of empty df
                 would actually be true negatives/total
         '''
         #find the subset dataframe that fits the tree statement
         #here put piece that takes random 10% of full dataframe to use instead of full thing for computation 
-        res_df = self.apply_tree(full_df, full_df.copy())
+        res_df = self.apply_tree(full_df)
         #print(res_df)
         if not res_df.empty:
             true_pos = res_df[res_df.presence == 1].count()[0] 
