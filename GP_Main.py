@@ -3,9 +3,8 @@
 Created on Thu Jan  3 20:56:06 2019
 
 To run this file, provide 2 arguments after the script name: First, 
-the path to the data file being used. Second, the path to a 
-directory into which the program will create the output files. 
-E.g. python3 GP_Main.py <path to data>.csv <path to output directory>
+the path to the data file being used. Second, the path to an output file. 
+E.g. python3 GP_Main.py <path to data>.csv <path to output>.txt
 
 @author: Savannah Rogers
 """
@@ -207,8 +206,7 @@ def population_reproduction(population, pop_size, tournament_size, mut_prob, lea
     return(newpop, avg_pop_fit, sd_pop_fit, best_ind, best_fit)
 
 
-        
-#crossover
+
 def cross_over(tree1, tree2, leaf_probability, full_df, total_pres, total_abs, variables):
     """
     Swaps two nodes between existing trees. Applies changes in place and 
@@ -632,7 +630,7 @@ def mult_gen():
 
 if __name__ == "__main__":
     RAW_DATA = pandas.read_csv(sys.argv[1])
-    VARS = RAW_DATA.iloc[:,[38,39,40,41,42,43,45,46,47,48,49,50]]
+    VARS = RAW_DATA.iloc[:,[38,39,40,41,42,43,45,46,47,48,49,50]] #update this to just be all columns except presence
     for i in list(VARS):
     #for i in list(RAW_DATA)[0:5]:
         title = i
