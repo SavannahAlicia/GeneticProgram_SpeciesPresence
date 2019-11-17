@@ -1,0 +1,4 @@
+[ ] reset to use all columns in VARS except presence
+[ ] include option for test and train data split
+[ ] move bash and R scripts to private repo
+[ ] clean and comment all code
