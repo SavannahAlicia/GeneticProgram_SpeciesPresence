@@ -1,6 +1,7 @@
 # Manually entered
 InputOutputStuff/
 Rscripts/
+*.code-workspace
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
