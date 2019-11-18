@@ -374,11 +374,5 @@ def is_correct_type(want_leaf, node):
         return False
     
     
-#
-#    
-#            
-    
-    #if one is whole tree
-    #if both whole tree
-    
+
     

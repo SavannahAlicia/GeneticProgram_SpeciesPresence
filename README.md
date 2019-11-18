@@ -21,8 +21,10 @@ You are now ready to run the program.
 
 To run the algorithm, use the following format:
 ```bash
-$ python3 GP_Main.py "path/to/input.csv" "path/to/output.txt"
+$ python3 GP_Main.py path/to/input.csv path/to/output.txt
 ```
+If you would like to print all output possible for the program, include the argument `--verbose` with the above in any position after `GP_Main.py`.
+
 ### Input File
 Your input file should be a csv containing columns for your covariates and one column titled `presence` that contains `1`'s and `0`'s where `1` represents a success ("species presence") and `0` represents a failure ("species psuedo absence"). All other columns will be included as covariates. It is important to balance your dataset so that the number of `1`'s and `0`'s in `presence` are approximately equivalent. 
 
@@ -31,3 +33,4 @@ Your output files will be written as a text file formatted using indentations so
 
 ## Interrupting
 To force quit the process in a Unix-like environment, use `Ctrl-C`.
+
