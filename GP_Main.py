@@ -313,7 +313,7 @@ def mult_gen():
     leaf_probability = .5
     mut_prob = .05
     leaf_mut_prob = .9
-    generations = 50
+    generations = 40
     avg_fitnesses = []
     sd_fitnesses = []
     best_inds = []
@@ -338,7 +338,7 @@ def mult_gen():
         best_fits.append(best_fit)
         generation.append(i)
         print(".........................{}".format(i))
-        log"Best individual: ")
+        log("Best individual: ")
         if log.is_verbose:
             pop[0].print_tree_data()
         log("Worst individual: ")
