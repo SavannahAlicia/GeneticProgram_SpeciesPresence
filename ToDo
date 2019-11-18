@@ -2,3 +2,8 @@
 [ ] include option for test and train data split
 [ ] move bash and R scripts to private repo
 [ ] clean and comment all code
+[ ] make leaf probability effect prob that leaf is mutated instead of node
+[ ] change generations back to 35 instead of 5
+[ ] automatically trim bloat (nodes that don't contribute) after crossover/mutation (on or off with flag)
+[ ] add option to trim bloat of only the final trees
+[ ] create tree object from txt file
