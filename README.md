@@ -1,7 +1,18 @@
 # GeneticProgram_SpeciesPresence
 
 ## Installation and Setup
-This program uses python 3. Dependencies are listed in `requirements.txt`. It is recommended you install in a virtual environment. I recommend using the built-in `venv` module for python3, as [described in the docs](https://docs.python.org/3/tutorial/venv.html). Below are instructions for a Unix-like environment. 
+This program uses python 3. Dependencies are listed in `requirements.txt`. It is recommended you install in a virtual environment. I recommend using the built-in `venv` module for python3, as [described in the docs](https://docs.python.org/3/tutorial/venv.html). 
+
+
+### In a Windows Environment
+1) Prepare Python alias
+    I strongly recommend using git bash if you are in a Windows environment. Run git bash as administrator. You will need to set an alias for python in Windows.
+    ```bash
+    $ alias python3='winpty python.exe'
+    ```
+    You can now proceed to the directions for a Unix-like Environment
+
+### In a Unix-like Environment
 1) Create virtual environment
     ```bash 
     $ python3 -m venv .venv # create a virtual environment with a clean python version. The virtual environment is created in the directory `venv/`
@@ -14,6 +25,8 @@ This program uses python 3. Dependencies are listed in `requirements.txt`. It is
     ```bash
     (.venv) $ pip3 install -r requirements.txt # install dependencies for the specific script into the virtual environment's python.
     ```
+
+
 
 You are now ready to run the program.
 
