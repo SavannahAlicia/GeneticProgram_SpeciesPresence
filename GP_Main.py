@@ -372,7 +372,7 @@ if __name__ == "__main__":
             sys.argv.remove(arg)
             break
     RAW_DATA = pandas.read_csv(sys.argv[1])
-    VARS = RAW_DATA.iloc[:,[38,39,40,41,42,43,45,46,47,48,49,50]] #update this to just be all columns except presence
+    VARS = RAW_DATA.loc[:, RAW_DATA.columns != 'presence'] #all columns except presence
     for i in list(VARS):
 
         title = i
